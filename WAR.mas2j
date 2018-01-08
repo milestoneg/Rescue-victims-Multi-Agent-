@@ -1,0 +1,15 @@
+MAS mars {
+
+	infrastructure: Centralised
+
+	environment: Env
+
+	agents:
+	
+		doctor;
+		scout;
+	
+
+	aslSourcePath:
+		"src/asl";
+}
