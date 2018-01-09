@@ -77,7 +77,6 @@
 		.print("Done!");
 		?possible(position(E,R),direction(G,H));
 		.println(E,",",R);
-		//setfinaldir(G,H);
 		currentpos(E,R);
 		.send(doctor,tell,scoutpos(E,R));
 		update_percepts;

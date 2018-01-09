@@ -43,31 +43,7 @@ class Model extends GridWorldModel {
 	Model() {
 		super(GWidth, GLength, 2);// call parent class
 
-		// Victim locations for the 6*6 arena
-		Location VicPos0 = new Location(1, 1);
-		Location VicPos1 = new Location(5, 1);
-		Location VicPos2 = new Location(3, 3);
-		Location VicPos3 = new Location(4, 4);
-		Location VicPos4 = new Location(3, 5);
-        
-		// Victim locations for the 5*6 arena
-		// Location VicPos0 = new Location(1, 4);
-		// Location VicPos1 = new Location(2, 3);
-		// Location VicPos2 = new Location(2, 5);
-		// Location VicPos3 = new Location(4, 1);
-		// Location VicPos4 = new Location(1, 1);
 
-		// add victim locations into lists
-		Victims.add(VicPos0);
-		Victims.add(VicPos1);
-		Victims.add(VicPos2);
-		Victims.add(VicPos3);
-		Victims.add(VicPos4);
-		storage.add(VicPos0);
-		storage.add(VicPos1);
-		storage.add(VicPos2);
-		storage.add(VicPos3);
-		storage.add(VicPos4);
 
 		// add wall for the 6*6 arena
 		addWall(0, 0, 0, 7);
@@ -75,33 +51,12 @@ class Model extends GridWorldModel {
 		addWall(0, 0, 7, 0);
 		addWall(0, 7, 7, 7);
 
-		// initial locations of Obstacles for the 6*6 arena
-		add(OBSTACLE, 1, 6);
-		add(OBSTACLE, 2, 3);
-		add(OBSTACLE, 3, 2);
-		add(OBSTACLE, 5, 2);
-		add(OBSTACLE, 5, 5);
-		add(OBSTACLE, 6, 5);
-
 		// add wall for the 5*6 arena
 		// addWall(0, 0, 6, 0);
 		// addWall(0, 0, 0, 7);
 		// addWall(6, 0, 6, 7);
 		// addWall(0, 7, 6, 7);
 
-		// initial location of Obstacles for the 5*6 arena
-		// add(OBSTACLE, 1, 3);
-		// add(OBSTACLE, 2, 2);
-		// add(OBSTACLE, 4, 2);
-		// add(OBSTACLE, 4, 5);
-		// add(OBSTACLE, 5, 5);
-
-		// initial location of victims
-		add(possibleVictim, VicPos0);
-		add(possibleVictim, VicPos1);
-		add(possibleVictim, VicPos2);
-		add(possibleVictim, VicPos3);
-		add(possibleVictim, VicPos4);
 	}
 
 	// Getters

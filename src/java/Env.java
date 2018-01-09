@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,9 +39,12 @@ public class Env extends Environment {
    
 	// Initial connection
 	static Client client;
+	
+	 final static int OBSTACLE = 4;
+	 public static final int possibleVictim = 128;// possible Victim code in the grid model
 
 	// map
-	static LinkedList<String> moving_path = new LinkedList();// record whole moving path of the robot
+	static LinkedList<String> moving_path = new LinkedList<String>();// record whole moving path of the robot
 
 	static LinkedList<Pair> victims_index = new LinkedList<>();// record path index of the victim and its RGB parameters
 
@@ -89,6 +91,27 @@ public class Env extends Environment {
 				updatePercepts();
 			} else if (action.getFunctor().equals("robotbeep")) {
 				robotbeep();
+			}else if (action.getFunctor().equals("constructenv")) {
+				List<Term> obstacleList= (List<Term>) action.getTerm(0);//read obstacle list from doctor
+				List<Term> victimList = (List<Term>) action.getTerm(1);//read victim list from doctor
+				//add obstacles into the model
+				for(Term Term : obstacleList) {
+					Literal literal = (Literal) Term;
+					int x =(int) ((NumberTerm) literal.getTerm(0)).solve();
+					int y =(int) ((NumberTerm) literal.getTerm(1)).solve();
+					model.add(OBSTACLE, x, y);
+					view.repaint();
+				}
+				//add victims into the model
+				for(Term Term : victimList) {
+					Literal literal = (Literal) Term;
+					int x = (int) ((NumberTerm) literal.getTerm(0)).solve();
+					int y =(int) ((NumberTerm) literal.getTerm(1)).solve();
+					model.add(possibleVictim, x, y);
+					Location victimPosition = new Location(x,y);
+					model.Victims.add(victimPosition);
+					model.storage.add(victimPosition);
+				}
 			}  else {
 				return false;
 			}
@@ -116,21 +139,6 @@ public class Env extends Environment {
 		return true;
 	}
 
-
-
-	public ArrayList<Literal> GetInformationFromAgent(String AgentName, String Functor){
-		ArrayList<Literal> informationList = new ArrayList<>();
-		List<Literal> information = consultPercepts(AgentName);
-		
-		for(Literal literal : information) {
-			if(literal.getFunctor().equals(Functor)) {
-				informationList.add(literal);
-			}
-			System.out.println(literal.toString());
-		}
-		return informationList;
-	}
-	
 	
 	
 	/**

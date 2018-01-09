@@ -1,22 +1,21 @@
 // Agent doctor in project mars
 
 /* Initial beliefs and rules */
-possibilitiescount(999).
+possibilitiescount(999).//The initial value is better more than the total possibilities
 
 //believes of obstacles
-obstacle(1,6).
-obstacle(2,3).
-obstacle(3,2).
-obstacle(5,2).
-obstacle(5,5).
-obstacle(6,5).
+// obstacle locations for the 6*6 arena
+obstaclelist([obstacle(1,6),obstacle(2,3),obstacle(3,2),obstacle(5,2),obstacle(5,5),obstacle(6,5)]).
+
+// obstacle locations for 5*6 arena
+//obstaclelist([obstacle(1,3),obstacle(2,2),obstacle(4,2),obstacle(4,5),obstacle(5,5)]).
 
 //believes of possible victims
-possiblevictim(1,1).
-possiblevictim(5,1).
-possiblevictim(3,3).
-possiblevictim(4,4).
-possiblevictim(3,5).
+//victim list for 6*6 arena
+victimlist([possiblevictim(1,1),possiblevictim(5,1),possiblevictim(3,3),possiblevictim(4,4),possiblevictim(3,5)]).
+
+//victim list for 5*6 arena
+//victimlist([possiblevictim(1,4),possiblevictim(2,3),possiblevictim(2,5),possiblevictim(4,1),possiblevictim(1,1)]).
 
 /* Initial goals */
 !start.
@@ -29,7 +28,9 @@ possiblevictim(3,5).
  */
 +!start
 	<-	
-		//constructenv;
+		?obstaclelist(L);
+		?victimlist(M);
+		constructenv(L,M);
 		.print("I have ordered scout to look the victims!");
 		.send(scout,achieve,print_ready)		
 		.wait(1000);

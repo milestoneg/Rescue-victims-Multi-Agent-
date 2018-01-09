@@ -1,4 +1,8 @@
-
+/**
+ * Implementation of A* algorithm.
+ * This A* is suitable for the GridWorldModel.
+ * @author Yuan Gao
+ */
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,15 +20,22 @@ public class AStar {
 
 	private GridWorldModel arena;
 	
+	//Constructor
 	public AStar(GridWorldModel arena) {
 		this.arena = arena;
 	}
 
+	/**
+	 * Main implementation of the algorithm.
+	 * @param from Start location
+	 * @param to target location
+	 * @return List of location indicate the path
+	 */
 	public List<Location> findPath(Location from, Location to) {
 		openList.clear();
 		closeList.clear();
 		Node start = new Node(from);
-		Node end = new Node(to);
+		Node target = new Node(to);
 		Node point = start;
 		closeList.add(point);
 		boolean flag = false;
@@ -33,8 +44,8 @@ public class AStar {
 				if (isOutOfBounds(next)) {
 					continue;
 				}
-				if (next.equals(end)) {
-					end.parent = point;
+				if (next.equals(target)) {
+					target.parent = point;
 					flag = true;
 					break;
 				}
@@ -69,7 +80,7 @@ public class AStar {
 		}
 		List<Location> path = new ArrayList<>();
 		
-		point = end;
+		point = target;
 		while (point.parent != null) {
 			path.add(point.toLocation());
 			point = point.parent;
@@ -80,10 +91,21 @@ public class AStar {
 		return path;
 	}
 
+	/**
+	 * Method used to calculate the manhattan distance between two nodes.
+	 * @param node1 
+	 * @param node2
+	 * @return int distance
+	 */
 	private int getDistance(Node node1, Node node2) { // Manhattan
 		return Math.abs(node1.x - node2.x) + Math.abs(node1.y - node2.y);
 	}
-
+	
+	/**
+	 * Method used to check whether a node is out of bound
+	 * @param node
+	 * @return boolean
+	 */
 	private boolean isOutOfBounds(Node node) {
 		if (node.x < 0 || node.y < 0) {
 			return true;
@@ -94,11 +116,19 @@ public class AStar {
 		return false;
 	}
 
+	/**
+	 * Method to check whether a node is occupied by a obstacle.
+	 * @param node
+	 * @return boolean
+	 */
 	private boolean isOccupied(Node node) {
-		//System.out.println(node.x+","+node.y+!arena.isFreeOfObstacle(node.x,node.y));
 		return !arena.isFreeOfObstacle(node.x,node.y);
 	}
 
+	/**
+	 * Implementation of node object
+	 *
+	 */
 	private class Node implements Comparable<Node> {
 
 		private int x;
@@ -132,6 +162,9 @@ public class AStar {
 			return surrounds;
 		}
 
+		/**
+		 * Override method defined by the comparable interface.
+		 */
 		@Override
 		public int compareTo(Node other) {
 			return f - other.f;
