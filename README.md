@@ -5,6 +5,7 @@ The scenario is as follows: a doctor agent has information about 5 possible loca
 ## Tags
 - Hidden Markov Chain
 - A* algorithm
+- Lejos
 ## File Structure
 RobotSide/src - Robot action and display control
 ../src - Main algorithms
